@@ -1,0 +1,111 @@
+Project Title: Student Management System
+🧱 Project Structure
+student_management.py
+students.txt      ← stores all student data
+🧾 Source Code 
+import os
+FILE = "students.txt"
+def add_student():
+    roll = input("Enter Roll Number: ")
+    name = input("Enter Name: ")
+    course = input("Enter Course: ")
+    marks = input("Enter Marks: ")
+    email = input("Enter Email: ")
+    record = f"{roll},{name},{course},{marks},{email}\n"
+    with open(FILE, "a") as f:
+        f.write(record)
+    print("Student added successfully!\n")
+def display_students():
+    if not os.path.exists(FILE):
+        print("No records found!\n")
+        return
+    print("\n--- Student Records ---")
+    with open(FILE, "r") as f:
+        for line in f:
+            roll, name, course, marks, email = line.strip().split(",")
+            print(f"Roll: {roll}, Name: {name}, Course: {course}, Marks: {marks}, Email: {email}")
+    print()
+def search_student():
+    roll_to_search = input("Enter Roll Number to Search: ")
+    found = False
+    with open(FILE, "r") as f:
+        for line in f:
+            roll, name, course, marks, email = line.strip().split(",")
+            if roll == roll_to_search:
+                print("\n--- Student Found ---")
+                print(f"Roll: {roll}, Name: {name}, Course: {course}, Marks: {marks}, Email: {email}\n")
+                found = True
+                break
+    if not found:
+        print("Student not found!\n")
+def update_student():
+    roll_to_update = input("Enter Roll Number to Update: ")
+    lines = []
+    updated = False
+    with open(FILE, "r") as f:
+        lines = f.readlines()
+    with open(FILE, "w") as f:
+        for line in lines:
+            roll, name, course, marks, email = line.strip().split(",")
+            if roll == roll_to_update:
+                print("Enter new details:")
+                name = input("New Name: ")
+                course = input("New Course: ")
+                marks = input("New Marks: ")
+                email = input("New Email: ")
+                f.write(f"{roll},{name},{course},{marks},{email}\n")
+                updated = True
+            else:
+                f.write(line)
+    if updated:
+        print("Record updated successfully!\n")
+    else:
+        print("Student not found!\n")
+def delete_student():
+    roll_to_delete = input("Enter Roll Number to Delete: ")
+    lines = []
+    deleted = False
+    with open(FILE, "r") as f:
+        lines = f.readlines()
+    with open(FILE, "w") as f:
+        for line in lines:
+            roll = line.split(",")[0]
+            if roll == roll_to_delete:
+                deleted = True
+                continue
+            f.write(line)
+    if deleted:
+        print("Record deleted successfully!\n")
+    else:
+        print("Student not found!\n")
+def menu():
+    while True:
+        print("==== Student Management System ====")
+        print("1. Add Student")
+        print("2. Display All Students")
+        print("3. Search Student")
+        print("4. Update Student")
+        print("5. Delete Student")
+        print("6. Exit")
+        choice = input("Enter your choice: ")
+        if choice == '1':
+            add_student()
+        elif choice == '2':
+            display_students()
+        elif choice == '3':
+            search_student()
+        elif choice == '4':
+            update_student()
+        elif choice == '5':
+            delete_student()
+        elif choice == '6':
+            print("Exiting Program...")
+            break
+        else:
+            print("Invalid choice! Try again.\n")
+menu()
+1. IntroductionThis project is a Student Management System built using Python. It allows storing and modifying student details easily and helps colleges maintain records digitally.
+2. Objectives:Maintain a student database,Perform CRUD operations,Provide a simple user-friendly interface
+3. Methodology:Python file handling,Menu-driven programming,Use of functions for modularity
+4. Output:User chooses options and performs operations on student records.
+5. Conclusion:A simple and efficient system for managing student data in colleges.

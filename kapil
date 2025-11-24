@@ -1,0 +1,51 @@
+iamport datetime
+  def add_student() :
+  name = input ("Enter student name: ")
+  roll = input ("Enter roll number:")
+
+with open ("students.txt", "a") as f:
+      f.write(f"{roll},{name}\n") 
+
+print("Student added successfully!\n")
+def mark_attendence():
+    roll = input("Enter student roll number: ") 
+    status = input("Present or absent (P/A): ").upper()
+if status not in ["P", "A"]:
+  print ("Invalid choice!")
+  return
+  date = datetime.date.today()
+  with open ("attendence.txt" , "a") as f:f.write (f"{roll},{status},{date}\n")
+  print("Attendance marked !\n")
+  def view_attendence():
+  print("n---Attendance Records ---")
+  try:
+      with open("attendence.txt", "r") as f:
+  date = f.readlines()
+         for line in date:
+             roll,status, date = line.strip().split(",")
+             print(f"Roll: {roll} | Status : {status} | Date: {date}")
+expect FileNotFoundError:
+           print("No attendance records found!")
+           print() 
+def main():
+     while True:
+       print("=====Student Attendance System =====")
+       print("1. Add Student")
+       print("2. Mark Attendence")
+       print("3. View Students")
+       print("4. View Attendence")
+       print("5. Exit")
+       choice = input("Enter your choice:")
+       if choice == "1":
+          add_student()
+       elif choice == "2":
+           mark_attendence()
+       elif choice == "3":
+           view_students()
+       elif choice == "4":
+           view_attendence()
+       elif choice == "5":
+           print("Exiting program...")
+           break
+       else:
+            print("Invalid option! Try again.\n:)
